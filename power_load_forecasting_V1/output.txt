@@ -1,0 +1,122 @@
+2026-06-16 14:58:30.254852: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-06-16 14:58:32.316862: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-06-16 14:58:33.123014: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+C:\anaconda\Lib\site-packages\keras\src\layers\rnn\rnn.py:199: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(**kwargs)
+   var1(t-1)  var2(t-1)  var3(t-1)  var4(t-1)   var1(t)
+1   0.423837   0.718447       0.80       0.23  0.404007
+2   0.404007   0.718447       0.87       0.15  0.401561
+3   0.401561   0.718447       0.87       0.15  0.385192
+4   0.385192   0.718447       0.80       0.15  0.410957
+5   0.410957   0.718447       0.80       0.15  0.419180
+(8760, 1, 4) (8760,) (8735, 1, 4) (8735,)
+Epoch 1/50
+122/122 - 1s - 12ms/step - loss: 0.1121 - val_loss: 0.1153
+Epoch 2/50
+122/122 - 0s - 2ms/step - loss: 0.0582 - val_loss: 0.0955
+Epoch 3/50
+122/122 - 0s - 3ms/step - loss: 0.0517 - val_loss: 0.0807
+Epoch 4/50
+122/122 - 0s - 4ms/step - loss: 0.0470 - val_loss: 0.0673
+Epoch 5/50
+122/122 - 0s - 4ms/step - loss: 0.0424 - val_loss: 0.0567
+Epoch 6/50
+122/122 - 0s - 4ms/step - loss: 0.0390 - val_loss: 0.0500
+Epoch 7/50
+122/122 - 0s - 3ms/step - loss: 0.0364 - val_loss: 0.0451
+Epoch 8/50
+122/122 - 0s - 3ms/step - loss: 0.0338 - val_loss: 0.0418
+Epoch 9/50
+122/122 - 0s - 3ms/step - loss: 0.0317 - val_loss: 0.0402
+Epoch 10/50
+122/122 - 0s - 3ms/step - loss: 0.0309 - val_loss: 0.0398
+Epoch 11/50
+122/122 - 0s - 3ms/step - loss: 0.0306 - val_loss: 0.0393
+Epoch 12/50
+122/122 - 0s - 3ms/step - loss: 0.0304 - val_loss: 0.0389
+Epoch 13/50
+122/122 - 0s - 2ms/step - loss: 0.0304 - val_loss: 0.0388
+Epoch 14/50
+122/122 - 0s - 3ms/step - loss: 0.0304 - val_loss: 0.0387
+Epoch 15/50
+122/122 - 0s - 3ms/step - loss: 0.0304 - val_loss: 0.0385
+Epoch 16/50
+122/122 - 0s - 2ms/step - loss: 0.0304 - val_loss: 0.0387
+Epoch 17/50
+122/122 - 0s - 3ms/step - loss: 0.0304 - val_loss: 0.0387
+Epoch 18/50
+122/122 - 0s - 2ms/step - loss: 0.0304 - val_loss: 0.0387
+Epoch 19/50
+122/122 - 0s - 2ms/step - loss: 0.0304 - val_loss: 0.0387
+Epoch 20/50
+122/122 - 0s - 2ms/step - loss: 0.0304 - val_loss: 0.0387
+Epoch 21/50
+122/122 - 0s - 2ms/step - loss: 0.0304 - val_loss: 0.0387
+Epoch 22/50
+122/122 - 0s - 3ms/step - loss: 0.0304 - val_loss: 0.0384
+Epoch 23/50
+122/122 - 0s - 2ms/step - loss: 0.0304 - val_loss: 0.0385
+Epoch 24/50
+122/122 - 0s - 3ms/step - loss: 0.0304 - val_loss: 0.0386
+Epoch 25/50
+122/122 - 1s - 6ms/step - loss: 0.0304 - val_loss: 0.0387
+Epoch 26/50
+122/122 - 0s - 3ms/step - loss: 0.0304 - val_loss: 0.0386
+Epoch 27/50
+122/122 - 0s - 2ms/step - loss: 0.0304 - val_loss: 0.0386
+Epoch 28/50
+122/122 - 0s - 3ms/step - loss: 0.0304 - val_loss: 0.0386
+Epoch 29/50
+122/122 - 0s - 2ms/step - loss: 0.0304 - val_loss: 0.0387
+Epoch 30/50
+122/122 - 0s - 2ms/step - loss: 0.0304 - val_loss: 0.0388
+Epoch 31/50
+122/122 - 0s - 3ms/step - loss: 0.0304 - val_loss: 0.0385
+Epoch 32/50
+122/122 - 0s - 3ms/step - loss: 0.0303 - val_loss: 0.0387
+Epoch 33/50
+122/122 - 0s - 3ms/step - loss: 0.0303 - val_loss: 0.0385
+Epoch 34/50
+122/122 - 0s - 4ms/step - loss: 0.0303 - val_loss: 0.0387
+Epoch 35/50
+122/122 - 0s - 3ms/step - loss: 0.0303 - val_loss: 0.0387
+Epoch 36/50
+122/122 - 0s - 3ms/step - loss: 0.0303 - val_loss: 0.0386
+Epoch 37/50
+122/122 - 0s - 2ms/step - loss: 0.0302 - val_loss: 0.0385
+Epoch 38/50
+122/122 - 0s - 3ms/step - loss: 0.0302 - val_loss: 0.0386
+Epoch 39/50
+122/122 - 0s - 2ms/step - loss: 0.0302 - val_loss: 0.0385
+Epoch 40/50
+122/122 - 0s - 2ms/step - loss: 0.0302 - val_loss: 0.0385
+Epoch 41/50
+122/122 - 0s - 3ms/step - loss: 0.0303 - val_loss: 0.0385
+Epoch 42/50
+122/122 - 0s - 3ms/step - loss: 0.0303 - val_loss: 0.0386
+Epoch 43/50
+122/122 - 0s - 3ms/step - loss: 0.0302 - val_loss: 0.0384
+Epoch 44/50
+122/122 - 0s - 3ms/step - loss: 0.0302 - val_loss: 0.0385
+Epoch 45/50
+122/122 - 0s - 3ms/step - loss: 0.0302 - val_loss: 0.0384
+Epoch 46/50
+122/122 - 0s - 3ms/step - loss: 0.0302 - val_loss: 0.0386
+Epoch 47/50
+122/122 - 0s - 3ms/step - loss: 0.0302 - val_loss: 0.0385
+Epoch 48/50
+122/122 - 0s - 3ms/step - loss: 0.0302 - val_loss: 0.0388
+Epoch 49/50
+122/122 - 0s - 3ms/step - loss: 0.0302 - val_loss: 0.0390
+Epoch 50/50
+122/122 - 0s - 3ms/step - loss: 0.0302 - val_loss: 0.0389
+
+[1m  1/273[0m [37m©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥[0m [1m26s[0m 97ms/step
+[1m 84/273[0m [32m©¥©¥©¥©¥©¥©¥[0m[37m©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥[0m [1m0s[0m 606us/step
+[1m173/273[0m [32m©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥[0m[37m©¥©¥©¥©¥©¥©¥©¥©¥[0m [1m0s[0m 586us/step
+[1m262/273[0m [32m©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥[0m[37m©¥[0m [1m0s[0m 579us/step
+[1m273/273[0m [32m©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥[0m[37m[0m [1m0s[0m 881us/step
+[1m273/273[0m [32m©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥[0m[37m[0m [1m0s[0m 918us/step
+Test RMSE: 109.854
+Test mape: 0.114
