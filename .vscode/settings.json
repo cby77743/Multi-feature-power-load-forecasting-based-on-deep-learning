@@ -1,4 +1,6 @@
 {
+    "python.defaultInterpreterPath": "C:\\Users\\byche\\anaconda3\\envs\\py311\\python.exe",
+    "python.terminal.activateEnvironment": true,
     "python-envs.defaultEnvManager": "ms-python.python:conda",
     "python-envs.defaultPackageManager": "ms-python.python:conda"
 }

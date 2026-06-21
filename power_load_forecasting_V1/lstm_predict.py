@@ -118,3 +118,10 @@ print('Test RMSE: %.3f' % rmse)
 # calculate MAPE
 mape = mean_absolute_percentage_error(inv_y, inv_yhat)
 print('Test mape: %.3f' % mape)
+
+
+
+
+
+
+

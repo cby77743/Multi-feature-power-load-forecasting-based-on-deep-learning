@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "运行 lstm_cby（项目虚拟环境）",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}\\lstm_cby.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "python": "${workspaceFolder}\\.venv\\Scripts\\python.exe"
+        }
+    ]
+}

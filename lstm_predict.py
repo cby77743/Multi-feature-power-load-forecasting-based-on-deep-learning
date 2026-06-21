@@ -1,40 +1,17 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jun 17 10:38:30 2026
-
-@author: 1
-"""
-import argparse
-
 from pandas import read_csv
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import mean_squared_error
-from math import sqrt
-
 from pandas import DataFrame
 from pandas import concat
-from keras.models import Sequential
-from keras.layers import Input
-from keras.layers import LSTM
-from keras.layers import Dense
-
+from math import sqrt
+from numpy import concatenate
 from matplotlib import pyplot
-
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import mean_squared_error
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import LSTM
 import numpy as np
-from numpy import concatenate 
-
-parser = argparse.ArgumentParser(description="使用 Keras LSTM 预测电力负荷")
-parser.add_argument("--epochs", type=int, default=50, help="训练轮数，默认 50")
-parser.add_argument("--batch-size", type=int, default=72, help="批大小，默认 72")
-parser.add_argument(
-    "--show-plot",
-    action="store_true",
-    help="训练完成后显示损失曲线窗口；默认保存图片并自动退出",
-)
-args = parser.parse_args()
-
-
-
+# from sklearn.metrics import mea
 
 # calculate MAPE
 def mean_absolute_percentage_error(real, predict):
@@ -46,16 +23,9 @@ def mean_absolute_percentage_error(real, predict):
             count += 1
     return res/count
 
-
-
-
-
-
-
 # convert series to supervised learning
-
 def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
-    
+
     n_vars = 1 if type(data) is list else data.shape[1]
 
     df = DataFrame(data)
@@ -64,7 +34,6 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
     for i in range(n_in, 0, -1):
         cols.append(df.shift(i))
         names += [('var%d(t-%d)' % (j + 1, i)) for j in range(n_vars)]
-
     # forecast sequence (t, t+1, ... t+n)
     for i in range(0, n_out):
         cols.append(df.shift(-i))
@@ -72,107 +41,83 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
             names += [('var%d(t)' % (j + 1)) for j in range(n_vars)]
         else:
             names += [('var%d(t+%d)' % (j + 1, i)) for j in range(n_vars)]
- 
     # put it all together
     agg = concat(cols, axis=1)
     agg.columns = names
-            
+    # drop rows with NaN values
     if dropnan:
         agg.dropna(inplace=True)
     return agg
 
-# 1、加载数据
+
+# load dataset
+'''
+header = 0: 排除第一行数据； header = -1: 包含第一行数据；
+index_col=0：排除第一列数据；index_col=-1：包含第一列数据；
+'''
 dataset = read_csv('power.csv', header=0, index_col=0)
 values = dataset.values
+# integer encode direction
+# encoder = LabelEncoder()
+# values[:, 4] = encoder.fit_transform(values[:, 4])
+# ensure all data is float
 values = values.astype('float32')
-
-# 2、数据归一化
+# normalize features
 scaler = MinMaxScaler(feature_range=(0, 1)).fit(values)
 scaled = scaler.fit_transform(values)
-
-# 3、制作数据
-# 变成样本数×特征数的形式
+# frame as supervised learning
 reframed = series_to_supervised(scaled, 1, 1)
+# drop columns we don't want to predict
 reframed.drop(reframed.columns[[5,6,7]], axis=1, inplace=True)
-# print(reframed.head())
+print(reframed.head())
 
-# 将上面的数据分为训练数据 和 测试数据
+# split into train and test sets
 values = reframed.values
 n_train_hours = 365 * 24
 train = values[:n_train_hours, :]
 test = values[n_train_hours:, :]
-
-# 将训练数据 和 测试数据 的输入和输出分开
+# split into input and outputs
 train_X, train_y = train[:, :-1], train[:, -1]
 test_X, test_y = test[:, :-1], test[:, -1]
-
-# 将 训练数据 和 测试数据的输入 变成 样本×时序×特征 的形式 reshape 一下
+# reshape input to be 3D [samples, timesteps, features]
 train_X = train_X.reshape((train_X.shape[0], 1, train_X.shape[1]))
 test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
+print(train_X.shape, train_y.shape, test_X.shape, test_y.shape)
 
-# print(train_X.shape, train_y.shape, test_X.shape, test_y.shape)
-
-# 4、建立神经网络
-# 建立神经网络模型
+# design network
 model = Sequential()
-model.add(Input(shape=(train_X.shape[1], train_X.shape[2])))
-model.add(LSTM(64))
+model.add(LSTM(64, input_shape=(train_X.shape[1], train_X.shape[2])))
 model.add(Dense(1))
-
-model.summary()
-
-# 规定损失函数和优化器
 model.compile(loss='mae', optimizer='adam')
-
-# 训练网络
-history = model.fit(train_X, train_y, 
-                    epochs=args.epochs, batch_size=args.batch_size,
-                    validation_data=(test_X, test_y), 
-                    verbose=2,
+# fit network
+history = model.fit(train_X, train_y, epochs=50, batch_size=72, validation_data=(test_X, test_y), verbose=2,
                     shuffle=False)
-
-# 5、训练完
-# 画图
+# plot history
 pyplot.plot(history.history['loss'], label='train')
 pyplot.plot(history.history['val_loss'], label='test')
 pyplot.legend()
-pyplot.tight_layout()
-pyplot.savefig("lstm_cby_loss.png", dpi=150)
-if args.show_plot:
-    pyplot.show()
-else:
-    pyplot.close()
+pyplot.show()
 
-# 做预测
-yhat = model.predict(test_X, verbose=0)
+# make a prediction
+yhat = model.predict(test_X)
 test_X = test_X.reshape((test_X.shape[0], test_X.shape[2]))
 
-# 反归一化，还原数据
+# invert scaling for forecast
 inv_yhat = concatenate((yhat, test_X[:, 1:]), axis=1)
 inv_yhat = scaler.inverse_transform(inv_yhat)
 inv_yhat = inv_yhat[:, 0]
-
-test_y = test_y.reshape((len(test_y),1))
+# invert scaling for actual
+test_y = test_y.reshape((len(test_y), 1))
 inv_y = concatenate((test_y, test_X[:, 1:]), axis=1)
 inv_y = scaler.inverse_transform(inv_y)
 inv_y = inv_y[:, 0]
-
-
-# 计算误差
+# calculate RMSE
 rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
 print('Test RMSE: %.3f' % rmse)
 
+# calculate MAPE
 mape = mean_absolute_percentage_error(inv_y, inv_yhat)
 print('Test mape: %.3f' % mape)
-
-
-print(f"预测完成，共生成 {len(yhat)} 个结果。")
-print("损失曲线已保存到 lstm_cby_loss.png，程序正常结束。")
-
-
-
-
-
 
 
 
