@@ -1,5 +1,3 @@
-
-
 import numpy as np
 import torch
 from pandas import DataFrame, concat, read_csv
@@ -9,6 +7,8 @@ from torch.utils.data import DataLoader, TensorDataset
 
 
 from torch import nn
+
+from matplotlib import pyplot
 
 def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
     """把时间序列转化为监督学习数据"""
@@ -33,7 +33,6 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
     return result
 
     print("def 跑完了")
-
 
 
 
@@ -63,7 +62,13 @@ def evaluate(model, loader, loss_fn, device):
     return total_loss / sample_count
 
 
-
+def predict (model, loader, device):
+    model.eval()
+    outputs = []
+    with torch.no_grad():
+        for inputs, _ in loader:
+            outputs.append(model(inputs.to(device)).cpu().numpy())
+    return np.concatenate(outputs)
 
 
 
@@ -153,8 +158,27 @@ for epoch in range(epochs):
     test_losses.append(test_loss)
     print(f"Epoch {epoch + 1:02d}/{epochs} - loss: {train_loss:.6f} - val_loss: {test_loss:.6f}")
 
+predicted_scaled = predict(model, test_loader, device)
+
+power_min = scaler.data_min_[0]
+power_range = scaler.data_range_[0]
+predicted_power = predicted_scaled * power_range + power_min
+actual_power = test_y * power_range + power_min
 
 
+rmse = float(np.sqrt(np.mean((actual_power - predicted_power) ** 2)))
+nonzero = actual_power != 0
+mape = float(np.mean(np.abs((predicted_power[nonzero] - actual_power[nonzero]) / actual_power[nonzero])))
+print(f"Test RMSE: {rmse:.3f}")
+print(f"Test MAPE: {mape:.3%}")
+
+pyplot.plot(train_losses, label="train")
+pyplot.plot(test_losses, label="test")
+pyplot.xlabel("epoch")
+pyplot.ylabel("MAE")
+pyplot.legend()
+pyplot.savefig("lstm_cby_pytorch_loss.png", dpi=150)
+print("损失曲线已保存到 lstm_cby_pytorch_loss.png，程序正常结束。")
 
 
 print(len(raw_values))

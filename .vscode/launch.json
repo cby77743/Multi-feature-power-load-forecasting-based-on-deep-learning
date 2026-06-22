@@ -2,13 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "运行 lstm_cby（项目虚拟环境）",
+            "name": "运行 lstm_cby_pytorch（Anaconda CUDA）",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}\\lstm_cby.py",
+            "program": "${workspaceFolder}\\lstm_cby_pytorch.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
-            "python": "${workspaceFolder}\\.venv\\Scripts\\python.exe"
+            "python": "C:\\anaconda\\python.exe"
         }
     ]
 }
