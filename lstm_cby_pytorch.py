@@ -35,7 +35,6 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
     print("def 跑完了")
 
 
-
 class LoadForecastLSTM(nn.Module):
     def __init__(self, input_size, hidden_size=64):
         super().__init__()
@@ -45,8 +44,6 @@ class LoadForecastLSTM(nn.Module):
     def forward(self, x):
         sequence, _ = self.lstm(x)
         return self.output(sequence[:, -1, :]).squeeze(-1)
-
-
 
 
 def evaluate(model, loader, loss_fn, device):
@@ -158,6 +155,8 @@ for epoch in range(epochs):
     test_losses.append(test_loss)
     print(f"Epoch {epoch + 1:02d}/{epochs} - loss: {train_loss:.6f} - val_loss: {test_loss:.6f}")
 
+
+# 5、反归一化
 predicted_scaled = predict(model, test_loader, device)
 
 power_min = scaler.data_min_[0]
