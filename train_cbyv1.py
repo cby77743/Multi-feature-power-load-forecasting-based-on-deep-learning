@@ -5,7 +5,7 @@ from pandas import DataFrame
 from pandas import read_csv
 from sklearn.preprocessing import MinMaxScaler
 
-from pandas import concat
+from pandas import concat                         
 
 from torch.utils.data import TensorDataset, DataLoader
 import torch
